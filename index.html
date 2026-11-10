@@ -73,7 +73,6 @@
     .msg.my { align-self: flex-end; background: var(--text); color: var(--bg); border-bottom-right-radius: 4px; }
     .msg.other { align-self: flex-start; background: var(--card2); color: var(--text); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
     
-    /* ИСПРАВЛЕНИЕ: Добавлен padding для системных кнопок Android */
     .chat-input-area { 
       padding: 12px 20px; 
       padding-bottom: calc(12px + env(safe-area-inset-bottom, 20px)); 
@@ -122,16 +121,16 @@
     .auth-tab.active { color: var(--text); border-bottom: 2px solid var(--text);}
     .cache-warn { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.4; text-align: center;}
 
-    /* ================= МОБИЛЬНАЯ АДАПТАЦИЯ (БЕЗ ТРЕХ ПОЛОСОК) ================= */
+    /* ================= МОБИЛЬНАЯ АДАПТАЦИЯ ================= */
     @media (max-width: 768px) {
-      .sidebar { position: fixed; left: 0; top: 0; width: 70px; } /* Узкая панель */
+      .sidebar { position: fixed; left: 0; top: 0; width: 70px; } 
       .sidebar-header { display: none; }
       .sidebar-item { padding: 20px 0; justify-content: center; }
-      .sidebar-item span { display: none; } /* Скрываем текст, оставляем только иконки */
+      .sidebar-item span { display: none; } 
       .sidebar-item svg { width: 28px; height: 28px; margin: 0; }
       .sidebar-item.active { border-left: 4px solid var(--text); }
       
-      .content-area { margin-left: 70px; width: calc(100% - 70px); } /* Сдвигаем контент вправо */
+      .content-area { margin-left: 70px; width: calc(100% - 70px); } 
       .view-container { padding: 10px; }
       
       .chat-layout { flex-direction: column; }
@@ -182,7 +181,7 @@
     .srow-btn {display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--card); border: 2px solid var(--border); border-radius: 14px; cursor: pointer; transition: border .2s;}
     .srow-btn:hover {border-color: var(--text);}
     .srow-btn span {font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 10px;}
-    .srow-btn span svg {width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;}
+    .srow-btn span svg {width: 20px; height: 20px; fill: currentColor;}
 
     /* ТУМБЛЕРЫ (Switch) */
     .switch {position: relative; display: inline-block; width: 50px; height: 28px;}
@@ -291,7 +290,7 @@
 <!-- ================= ОСНОВНОЕ ПРИЛОЖЕНИЕ ================= -->
 <div class="app-layout" id="appScreen" style="display: none;">
   
-  <!-- БОКОВАЯ ПАНЕЛЬ (Теперь всегда слева и без полосок) -->
+  <!-- БОКОВАЯ ПАНЕЛЬ -->
   <div class="sidebar" id="sidebar">
     <div class="sidebar-header"><h2>Coregram</h2></div>
     
@@ -401,7 +400,10 @@
             <div class="settings-title">Уведомления</div>
             <div class="srow-btn" onclick="openNotificationSettings()">
               <span>
-                <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                <!-- ИКОНКА КОЛОКОЛЬЧИКА ЗАМЕНЕНА НА ЗАЛИТУЮ -->
+                <svg viewBox="0 0 24 24" style="stroke: none; fill: currentColor;">
+                  <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"></path>
+                </svg>
                 Настройки уведомлений
               </span>
               <span>›</span>
@@ -525,7 +527,6 @@
   const savedTheme = localStorage.getItem('cg_theme') || 'dark';
   document.documentElement.setAttribute('data-theme', savedTheme);
 
-  // Функции сайдбара теперь пустые, так как он всегда открыт
   window.openSidebar = () => {};
   window.closeSidebar = () => {};
 
@@ -717,7 +718,6 @@
       });
     }, 1000);
 
-    // ДОБАВЛЕНА АДМИНКА ДЛЯ ХАНТЕРА
     if (profile.id === 'bogdan-core' || profile.id === 'hanter-core') {
       $('#adminBtn').style.display = 'block';
       $('#adminBtn').onclick = openAdminPanel;
