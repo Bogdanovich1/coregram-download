@@ -91,7 +91,7 @@
     
     /* ================= АВТОРИЗАЦИЯ ================= */
     .auth-screen {position:fixed; inset:0; background:var(--bg); display:none; align-items:center; justify-content:center; padding: 20px; z-index: 1000; overflow-y: auto;}
-    .auth-screen.active {display: flex;}
+    .auth-screen.active {display:flex;}
     .auth-box {width:100%; max-width: 400px; background: var(--card); padding: 30px; border-radius: 24px; border: 1px solid var(--border);}
     .create-head{text-align:center;margin-bottom:26px}
     .create-head h1{font-size:26px;margin:0 0 6px}
@@ -139,18 +139,19 @@
     }
 
     /* ================= ЛЕНТА ================= */
-    .post{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;margin-bottom:14px;cursor:pointer;transition:background .2s}
+    .post{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;margin-bottom:14px;transition:background .2s}
     .post:hover{background:var(--card2)}
     .post-head{display:flex;align-items:center;gap:10px}
     .avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;background:var(--card2);border: 1px solid var(--border); display:flex;align-items:center;justify-content:center;color:var(--text);font-weight:700;font-size:17px; overflow:hidden; flex-shrink: 0;}
     .avatar img {width:100%; height:100%; object-fit:cover;}
-    .post-name{font-weight:700;font-size:15px;display:flex;align-items:center;gap:5px}
+    .post-name{font-weight:700;font-size:15px;display:flex;align-items:center;gap:5px; cursor:pointer;}
+    .post-name:hover {text-decoration: underline;}
     .post-handle{font-size:13px;color:var(--muted)}
     
     .verified{width:17px;height:17px;display:inline-block; fill: #1d9bf0;}
     
     .post-text{margin:12px 0 14px;font-size:15.5px;line-height:1.45; word-break: break-word;}
-    .post-actions{display:flex;align-items:center;gap:20px;border-top:1px solid var(--border);padding-top:12px}
+    .post-actions{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding-top:12px}
     
     .act{display:flex;align-items:center;gap:6px;background:none;border:0;cursor:pointer;color:var(--muted);font-size:13.5px;font-weight:600; transition: color 0.2s;}
     .act:hover { color: var(--text); }
@@ -159,6 +160,9 @@
     
     .heart-svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.1s;}
     .act:active .heart-svg { transform: scale(0.8); }
+
+    .report-btn { color: var(--muted); cursor: pointer; font-size: 18px; padding: 0 5px; transition: color 0.2s;}
+    .report-btn:hover { color: var(--danger); }
 
     /* ================= ПРОФИЛЬ ================= */
     .profile-head{padding:30px 18px 18px; display:flex; flex-direction:column; align-items:center; text-align:center;}
@@ -180,18 +184,11 @@
     
     .srow-btn {display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--card); border: 2px solid var(--border); border-radius: 14px; cursor: pointer; transition: border .2s;}
     .srow-btn:hover {border-color: var(--text);}
-    .srow-btn span {font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 10px;}
+    .srow-btn span {font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 12px;}
 
-    /* ТУМБЛЕРЫ (Switch) */
-    .switch {position: relative; display: inline-block; width: 50px; height: 28px;}
-    .switch input {opacity: 0; width: 0; height: 0;}
-    .slider {position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border); transition: .4s; border-radius: 34px;}
-    .slider:before {position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: var(--muted); transition: .4s; border-radius: 50%;}
-    input:checked + .slider {background-color: var(--text);}
-    input:checked + .slider:before {transform: translateX(22px); background-color: var(--bg);}
-
-    .setting-row {display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 10px;}
+    .setting-row {display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 10px; flex-wrap: wrap;}
     .setting-row span {font-size: 15px; font-weight: 600;}
+    .setting-row select {background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 8px; font-family: inherit; font-size: 14px; outline: none; cursor: pointer;}
 
     /* ================= МОДАЛКИ ================= */
     .modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);padding:20px}
@@ -200,7 +197,7 @@
     .modal-box h2{margin:0 0 14px;font-size:20px}
     .modal-box textarea, .modal-box input[type="text"], .modal-box input[type="tel"]{width:100%;background:var(--bg);border:2px solid var(--border);border-radius:12px;color:var(--text);padding:12px;margin-bottom:12px;font-family:inherit; font-size: 15px; outline: none;}
     .modal-box textarea:focus, .modal-box input:focus { border-color: var(--text); }
-    .modal-box textarea {min-height:100px; resize: vertical;}
+    .modal-box textarea {min-height:80px; resize: vertical;}
     
     #toasts{position:fixed;left:50%;transform:translateX(-50%);bottom:30px;z-index:300;display:flex;flex-direction:column;gap:8px;align-items:center}
     .toast{background:var(--card2);border:2px solid var(--text);padding:12px 18px;border-radius:14px;font-size:13.5px;font-weight:600; color: var(--text); box-shadow: 0 4px 12px rgba(0,0,0,.3);}
@@ -208,8 +205,7 @@
     .empty{text-align:center;color:var(--muted);font-size:14px;padding:60px 30px}
 
     /* ================= АДМИНКА ================= */
-    .admin-card{background:var(--card2); border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;}
-    .admin-card div {display:flex; flex-direction:column; gap:4px; cursor:pointer;}
+    .admin-card{background:var(--card2); border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:12px; display:flex; flex-direction:column; gap:8px;}
     .admin-btn {background:transparent; border:1px solid var(--danger); color:var(--danger); border-radius:8px; padding:8px 12px; font-size:12px; font-weight:700; cursor:pointer;}
     .admin-btn.ban {border-color:#f59e0b; color:#f59e0b;}
     .stats-row {display:flex; gap:10px; margin-bottom:16px;}
@@ -399,9 +395,20 @@
             <div class="settings-title">Уведомления</div>
             <div class="srow-btn" onclick="openNotificationSettings()">
               <span>
-                <!-- ВСТАВЛЕНА ТВОЯ КАРТИНКА -->
-                <img src="https://s6.iimage.su/s/10/gP6advTx7mVQzUfQTG4OLj1VoBezkK4KYLm9hFm7u.png" style="width: 22px; height: 22px; object-fit: contain;">
+                <img src="https://s6.iimage.su/s/10/gP6advTx7mVQzUfQTG4OLj1VoBezkK4KYLm9hFm7u.png" style="width: 28px; height: 28px; object-fit: contain;">
                 Настройки уведомлений
+              </span>
+              <span>›</span>
+            </div>
+          </div>
+
+          <!-- НОВЫЙ РАЗДЕЛ БЕЗОПАСНОСТИ -->
+          <div class="settings-group">
+            <div class="settings-title">Безопасность и приватность</div>
+            <div class="srow-btn" onclick="openPrivacySettings()">
+              <span>
+                <svg viewBox="0 0 24 24" style="width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                Приватность и безопасность
               </span>
               <span>›</span>
             </div>
@@ -452,6 +459,7 @@
   const postsRef = ref(db, 'posts');
   const usersRef = ref(db, 'users');
   const chatsRef = ref(db, 'chats');
+  const reportsRef = ref(db, 'reports'); // Новая ветка для жалоб
 
   const SYSTEM_ACCOUNTS = {
     bogdan: { id: 'bogdan-core', name: 'Bogdan', handle: 'bogdan', aliases: ['svqne'], password: '9080Vop1234', bio: 'CEO coregram', verified: true },
@@ -464,6 +472,7 @@
   let usersMap = new Map();
   let followsMap = new Map(); 
   let chatsMap = new Map(); 
+  let reportsMap = new Map();
   
   let isInitialLoad = true;
   let knownPosts = new Set();
@@ -565,6 +574,97 @@
     localStorage.setItem('cg_notif_settings', JSON.stringify(notifSettings));
     toast('Настройки уведомлений сохранены ✅');
     closeModal();
+  };
+
+  window.openPrivacySettings = () => {
+    const box = $('#modalBox');
+    box.innerHTML = `
+      <h2>Приватность</h2>
+      
+      <div class="setting-row">
+        <span>Кто может мне писать?</span>
+        <select>
+          <option>Все</option>
+          <option>Контакты</option>
+          <option>Никто</option>
+        </select>
+      </div>
+      
+      <div class="setting-row">
+        <span>Кто может видеть аватар?</span>
+        <select>
+          <option>Все</option>
+          <option>Контакты</option>
+          <option>Никто</option>
+        </select>
+      </div>
+
+      <div class="setting-row">
+        <span>Кто может видеть профиль?</span>
+        <select>
+          <option>Все</option>
+          <option>Контакты</option>
+          <option>Никто</option>
+        </select>
+      </div>
+
+      <button class="btn btn-primary" onclick="toast('Настройки приватности сохранены ✅'); closeModal();">Сохранить</button>
+      <button class="btn ghost" onclick="closeModal()">Закрыть</button>
+    `;
+    $('#modal').classList.add('show');
+  };
+
+  // === СИСТЕМА ЖАЛОБ ===
+  window.openReportModal = (postId) => {
+    const box = $('#modalBox');
+    box.innerHTML = `
+      <h2>Пожаловаться</h2>
+      <label style="font-size:12px; color:var(--muted); font-weight:600; text-transform:uppercase;">Причина</label>
+      <select id="reportReason" style="width:100%; background:var(--bg); border:2px solid var(--border); color:var(--text); padding:12px; border-radius:12px; margin-bottom:12px; font-family:inherit; font-size:15px; outline:none;">
+        <option>Пост несёт 18+ характер</option>
+        <option>Пост призывает к действию экстремизма</option>
+        <option>Пост издевается над слабонервными</option>
+        <option>Пост пропагандирует неприемлемую символику</option>
+        <option>Свой вариант...</option>
+      </select>
+      
+      <label style="font-size:12px; color:var(--muted); font-weight:600; text-transform:uppercase;">@username нарушителя</label>
+      <input type="text" id="reportTarget" placeholder="@username" style="margin-top:8px;">
+      
+      <textarea id="reportCustom" placeholder="Опишите проблему (необязательно)..." style="min-height:60px;"></textarea>
+
+      <button class="btn btn-primary" id="submitReportBtn" style="background:var(--danger); color:#fff; border-color:var(--danger);">Отправить жалобу</button>
+      <button class="btn ghost" onclick="closeModal()">Отмена</button>
+    `;
+    $('#modal').classList.add('show');
+    
+    $('#submitReportBtn').onclick = () => {
+      const reason = $('#reportReason').value;
+      const custom = $('#reportCustom').value.trim();
+      const target = $('#reportTarget').value.trim();
+
+      if (!target.startsWith('@') || target.length < 2) {
+        toast('⚠️ Обязательно укажите @username нарушителя');
+        return;
+      }
+
+      const finalReason = reason === 'Свой вариант...' ? custom : reason;
+      if (!finalReason) { toast('Опишите причину жалобы'); return; }
+
+      push(reportsRef, {
+        postId: postId || 'unknown',
+        reason: finalReason,
+        targetHandle: target,
+        reporterId: profile.id,
+        ts: Date.now(),
+        status: 'pending'
+      }).then(() => {
+        toast('Жалоба отправлена модератору 🛡️');
+        closeModal();
+      }).catch(e => {
+        toast('Ошибка отправки жалобы');
+      });
+    };
   };
 
   $('#tabLogin').onclick = () => {
@@ -952,6 +1052,21 @@
       }
     });
 
+    // СЛУШАЕМ ЖАЛОБЫ
+    onValue(reportsRef, (snapshot) => {
+      reportsMap.clear();
+      const data = snapshot.val();
+      if(data) {
+        for (const key in data) {
+          reportsMap.set(key, { id: key, ...data[key] });
+        }
+      }
+      if ($('#modal').classList.contains('show') && $('#modalBox').querySelector('h2').textContent.includes('ADMIN')) {
+        // Если открыта админка, обновляем её при новых жалобах
+        openAdminPanel(); 
+      }
+    });
+
     setTimeout(() => { isInitialLoad = false; }, 2000);
   }
 
@@ -1154,8 +1269,8 @@
       }
 
       return `
-        <div class="post" data-pid="${p.id}" onclick="openUserProfile('${esc(p.authorHandle)}')">
-          <div class="post-head">
+        <div class="post" data-pid="${p.id}">
+          <div class="post-head" onclick="openUserProfile('${esc(p.authorHandle)}')">
             ${avatarHTML}
             <div>
               <div class="post-name">${esc(p.authorName)} ${p.verified ? '<svg class="verified"><use href="#ic-verified"/></svg>' : ''}</div>
@@ -1169,6 +1284,10 @@
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
               </svg>
               <span>${p.likes || 0}</span>
+            </button>
+            
+            <button class="act report-btn" onclick="event.stopPropagation(); openReportModal('${p.id}')" title="Пожаловаться">
+              ⚑
             </button>
           </div>
         </div>
@@ -1283,14 +1402,33 @@
     let totalUsers = 3; 
     usersMap.forEach(u => { if(u.phone) totalUsers++; });
 
+    // Сортируем жалобы (новые сверху)
+    const sortedReports = Array.from(reportsMap.values()).sort((a,b) => b.ts - a.ts);
+
     box.innerHTML = `
       <h2 style="color:var(--danger); display:flex; align-items:center; gap:8px;">🛡️ ADMIN PANEL</h2>
       <div class="stats-row">
         <div class="stat-box"><h3>Юзеров</h3><span>${totalUsers}</span></div>
         <div class="stat-box"><h3>Постов</h3><span>${totalPosts}</span></div>
+        <div class="stat-box"><h3>Жалоб</h3><span>${reportsMap.size}</span></div>
       </div>
+
+      <div style="margin-top:20px; margin-bottom:10px; font-weight:700;">🚨 Жалобы</div>
+      <div style="max-height:200px; overflow-y:auto; padding-right:5px; margin-bottom:20px;">
+        ${sortedReports.length === 0 ? '<div class="empty" style="padding:10px;">Жалоб пока нет</div>' : sortedReports.map(r => `
+          <div class="admin-card">
+            <div style="font-size:14px;"><b>Нарушитель:</b> ${esc(r.targetHandle)}</div>
+            <div style="font-size:13px; color:var(--text);"><b>Причина:</b> ${esc(r.reason)}</div>
+            <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:5px;">
+              <button class="admin-btn ban" onclick="window.banFromReport('${r.id}', '${esc(r.targetHandle)}')">Забанить</button>
+              <button class="admin-btn" onclick="window.dismissReport('${r.id}')">Отклонить</button>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
       <div style="margin-top:20px; margin-bottom:10px; font-weight:700;">📝 Управление постами</div>
-      <div style="max-height:200px; overflow-y:auto; padding-right:5px;">
+      <div style="max-height:150px; overflow-y:auto; padding-right:5px;">
         ${Array.from(postsMap.values()).map(p => `
           <div class="admin-card">
             <div>
@@ -1301,19 +1439,31 @@
           </div>
         `).join('')}
       </div>
-      <div style="margin-top:20px; margin-bottom:10px; font-weight:700;">👥 Зарегистрированные юзеры</div>
-      <div style="max-height:200px; overflow-y:auto; padding-right:5px;">
-        ${Array.from(usersMap.values()).reverse().map(u => `
-          <div class="admin-card">
-            <div onclick="openUserProfile('${esc(u.handle)}')"><span style="font-size:14px; font-weight:600;">@${esc(u.handle)}</span></div>
-            <button class="admin-btn ban" onclick="window.toggleBan('${u.id}', ${!!u.banned})">${u.banned ? 'Разбан' : 'Забанить'}</button>
-          </div>
-        `).join('')}
-      </div>
       <button class="btn ghost" onclick="closeModal()" style="margin-top:20px">Закрыть</button>
     `;
     $('#modal').classList.add('show');
   }
+
+  window.dismissReport = (reportId) => {
+    remove(ref(db, 'reports/' + reportId)).then(() => {
+      toast('Жалоба отклонена');
+    });
+  };
+
+  window.banFromReport = (reportId, targetHandle) => {
+    // Ищем юзера по нику
+    const targetUser = Array.from(usersMap.values()).find(u => u.handle && u.handle.toLowerCase() === targetHandle.replace('@','').toLowerCase());
+    
+    if (!targetUser) {
+      toast('Пользователь с таким ником не найден');
+      return;
+    }
+
+    update(ref(db, 'users/' + targetUser.id), { banned: true }).then(() => {
+      remove(ref(db, 'reports/' + reportId)); // Удаляем жалобу после бана
+      toast(`Пользователь ${targetHandle} забанен!`);
+    });
+  };
 
   window.deletePost = (id) => {
     if(confirm('Удалить этот пост навсегда?')) {
