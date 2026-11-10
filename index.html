@@ -10,6 +10,7 @@
       --bg: #000000; --card: #111111; --card2: #1a1a1a;
       --text: #ffffff; --muted: #888888; --accent: #ffffff; 
       --border: #222222; --danger: #ef4444; --sidebar-bg: #050505;
+      --sidebar-width: 260px;
     }
     [data-theme="light"] {
       --bg: #ffffff; --card: #f5f5f5; --card2: #ebebeb;
@@ -21,11 +22,21 @@
     html,body{height:100%; margin: 0; padding: 0;}
     body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);overflow:hidden; transition: background .3s, color .3s;}
 
-    /* ИСПРАВЛЕНИЕ 1: Используем dvh, чтобы учитывать панели браузера */
     .app-layout { display: flex; height: 100vh; height: 100dvh; width: 100vw; overflow: hidden; }
 
     /* ================= БОКОВАЯ ПАНЕЛЬ ================= */
-    .sidebar { width: 260px; height: 100vh; height: 100dvh; background: var(--sidebar-bg); border-right: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto;}
+    .sidebar { 
+      width: var(--sidebar-width); 
+      height: 100vh; 
+      height: 100dvh; 
+      background: var(--sidebar-bg); 
+      border-right: 1px solid var(--border); 
+      display: flex; 
+      flex-direction: column; 
+      flex-shrink: 0; 
+      overflow-y: auto;
+      z-index: 100;
+    }
     .sidebar-header {padding: 24px 20px; border-bottom: 1px solid var(--border);}
     .sidebar-header h2 {margin: 0; font-size: 24px; font-weight: 800; color: var(--text);}
     
@@ -37,11 +48,8 @@
     /* ================= КОНТЕНТНАЯ ОБЛАСТЬ ================= */
     .content-area { flex: 1; display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; position: relative;}
     
-    .topbar-mobile {display:none; align-items:center;justify-content:space-between;padding:14px 18px;font-size:19px;font-weight:800;border-bottom:1px solid var(--border);background:var(--bg);flex-shrink:0; z-index: 10;}
-    .topbar-mobile .brand{color: var(--text);}
-    .menu-btn {background:none; border:none; color:var(--text); cursor:pointer; padding:0; display:flex; align-items:center; justify-content:center;}
-    .menu-btn svg {width: 28px; height: 28px; stroke: currentColor; stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round;}
-
+    .topbar-mobile {display:none;}
+    
     .view-container { flex: 1; overflow-y: auto; padding: 14px; }
     .view { display: none; max-width: 800px; margin: 0 auto; }
     .view.active { display: block; }
@@ -57,7 +65,6 @@
     .chat-item:hover { background: var(--card2); }
     .chat-item.active { background: var(--card2); border-left: 4px solid var(--text); }
     
-    /* ИСПРАВЛЕНИЕ 2: Добавлен min-height: 0 */
     .chat-main { flex: 1; display: flex; flex-direction: column; background: var(--bg); min-height: 0; height: 100%; }
     
     .chat-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 18px; }
@@ -66,10 +73,10 @@
     .msg.my { align-self: flex-end; background: var(--text); color: var(--bg); border-bottom-right-radius: 4px; }
     .msg.other { align-self: flex-start; background: var(--card2); color: var(--text); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
     
-    /* ИСПРАВЛЕНИЕ 3: Добавлен padding-bottom для безопасной зоны и flex-shrink: 0 */
+    /* ИСПРАВЛЕНИЕ: Добавлен padding для системных кнопок Android */
     .chat-input-area { 
-      padding: 16px 20px; 
-      padding-bottom: calc(16px + env(safe-area-inset-bottom)); 
+      padding: 12px 20px; 
+      padding-bottom: calc(12px + env(safe-area-inset-bottom, 20px)); 
       border-top: 1px solid var(--border); 
       display: flex; 
       gap: 10px; 
@@ -83,13 +90,6 @@
     .chat-send svg { width: 20px; height: 20px; fill: currentColor; }
     .chat-empty { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 15px; }
     
-    @media (max-width: 768px) {
-      .chat-sidebar { width: 100%; position: absolute; z-index: 5; height: 100%; transition: transform .3s; }
-      .chat-sidebar.hidden { transform: translateX(-100%); }
-      .chat-main { position: absolute; z-index: 10; width: 100%; height: 100%; background: var(--bg); transition: transform .3s; transform: translateX(100%); }
-      .chat-main.active { transform: translateX(0); }
-    }
-
     /* ================= АВТОРИЗАЦИЯ ================= */
     .auth-screen {position:fixed; inset:0; background:var(--bg); display:none; align-items:center; justify-content:center; padding: 20px; z-index: 1000; overflow-y: auto;}
     .auth-screen.active {display: flex;}
@@ -122,15 +122,21 @@
     .auth-tab.active { color: var(--text); border-bottom: 2px solid var(--text);}
     .cache-warn { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.4; text-align: center;}
 
-    /* ================= ОВЕРЛЕЙ И МОБИЛКА ================= */
-    .sidebar-overlay {position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 99; opacity: 0; visibility: hidden; transition: all .3s;}
-    .sidebar-overlay.open {opacity: 1; visibility: visible;}
-
+    /* ================= МОБИЛЬНАЯ АДАПТАЦИЯ (БЕЗ ТРЕХ ПОЛОСОК) ================= */
     @media (max-width: 768px) {
-      .sidebar {position: fixed; top: 0; left: -280px; transition: left .3s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 100;}
-      .sidebar.open {left: 0;}
-      .topbar-mobile {display: flex;}
+      .sidebar { position: fixed; left: 0; top: 0; width: 70px; } /* Узкая панель */
+      .sidebar-header { display: none; }
+      .sidebar-item { padding: 20px 0; justify-content: center; }
+      .sidebar-item span { display: none; } /* Скрываем текст, оставляем только иконки */
+      .sidebar-item svg { width: 28px; height: 28px; margin: 0; }
+      .sidebar-item.active { border-left: 4px solid var(--text); }
+      
+      .content-area { margin-left: 70px; width: calc(100% - 70px); } /* Сдвигаем контент вправо */
       .view-container { padding: 10px; }
+      
+      .chat-layout { flex-direction: column; }
+      .chat-sidebar { width: 100%; border-right: none; }
+      .chat-main { width: 100%; }
     }
 
     /* ================= ЛЕНТА ================= */
@@ -285,49 +291,39 @@
 <!-- ================= ОСНОВНОЕ ПРИЛОЖЕНИЕ ================= -->
 <div class="app-layout" id="appScreen" style="display: none;">
   
-  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-  
-  <!-- БОКОВАЯ ПАНЕЛЬ -->
+  <!-- БОКОВАЯ ПАНЕЛЬ (Теперь всегда слева и без полосок) -->
   <div class="sidebar" id="sidebar">
     <div class="sidebar-header"><h2>Coregram</h2></div>
     
     <button class="sidebar-item active" data-tab="feed" onclick="switchTab('feed')">
       <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> 
-      Лента
+      <span>Лента</span>
     </button>
 
     <button class="sidebar-item" data-tab="chats" onclick="switchTab('chats')">
       <svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.8-.9L3 21l1.9-5a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 8.5-8.5 8.4 8.4 0 0 1 8.5 8.5z"></path></svg>
-      Чаты
+      <span>Чаты</span>
     </button>
 
     <button class="sidebar-item" data-tab="search" onclick="switchTab('search')">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      Поиск
+      <span>Поиск</span>
     </button>
     
     <button class="sidebar-item" data-tab="profile" onclick="switchTab('profile')">
       <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      Мой профиль
+      <span>Мой профиль</span>
     </button>
 
     <button class="sidebar-item" data-tab="settings" onclick="switchTab('settings')">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.03 1.56V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 8.9 19.3a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.7 15a1.7 1.7 0 0 0-1.56-1.03H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.7 8.9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.56V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9c.14.38.42.7.78.9"/></svg>
-      Настройки
+      <span>Настройки</span>
     </button>
   </div>
 
   <!-- КОНТЕНТ -->
   <div class="content-area">
     
-    <div class="topbar-mobile" id="topbarMobile">
-      <button class="menu-btn" onclick="openSidebar()">
-        <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-      <span class="brand">Coregram</span>
-      <span style="width:28px;"></span>
-    </div>
-
     <div class="view-container" id="mainScroll">
       
       <!-- ЛЕНТА -->
@@ -529,8 +525,9 @@
   const savedTheme = localStorage.getItem('cg_theme') || 'dark';
   document.documentElement.setAttribute('data-theme', savedTheme);
 
-  window.openSidebar = () => { $('#sidebar').classList.add('open'); $('#sidebarOverlay').classList.add('open'); };
-  window.closeSidebar = () => { $('#sidebar').classList.remove('open'); $('#sidebarOverlay').classList.remove('open'); };
+  // Функции сайдбара теперь пустые, так как он всегда открыт
+  window.openSidebar = () => {};
+  window.closeSidebar = () => {};
 
   window.openNotificationSettings = () => {
     const box = $('#modalBox');
@@ -720,7 +717,8 @@
       });
     }, 1000);
 
-    if (profile.id === 'bogdan-core') {
+    // ДОБАВЛЕНА АДМИНКА ДЛЯ ХАНТЕРА
+    if (profile.id === 'bogdan-core' || profile.id === 'hanter-core') {
       $('#adminBtn').style.display = 'block';
       $('#adminBtn').onclick = openAdminPanel;
     }
@@ -1136,13 +1134,6 @@
     
     $('#fabPost').style.display = (tabName === 'settings' || tabName === 'search' || tabName === 'chats') ? 'none' : 'flex';
     $('#mainScroll').scrollTop = 0;
-    
-    if (tabName !== 'chats' && window.innerWidth <= 768) {
-       $('#chatMain').classList.remove('active');
-       $('#chatSidebar').classList.remove('hidden');
-    }
-    
-    closeSidebar();
   };
 
   function renderFeed() {
