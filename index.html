@@ -26,30 +26,27 @@
 
     /* ================= БОКОВАЯ ПАНЕЛЬ ================= */
     .sidebar { 
-      width: var(--sidebar-width); 
-      height: 100vh; 
-      height: 100dvh; 
-      background: var(--sidebar-bg); 
-      border-right: 1px solid var(--border); 
-      display: flex; 
-      flex-direction: column; 
-      flex-shrink: 0; 
-      overflow-y: auto;
-      z-index: 100;
+      width: var(--sidebar-width); height: 100vh; height: 100dvh; 
+      background: var(--sidebar-bg); border-right: 1px solid var(--border); 
+      display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto; z-index: 100;
     }
     .sidebar-header {padding: 24px 20px; border-bottom: 1px solid var(--border);}
     .sidebar-header h2 {margin: 0; font-size: 24px; font-weight: 800; color: var(--text);}
     
-    .sidebar-item {display: flex; align-items: center; gap: 16px; padding: 16px 20px; color: var(--text); font-size: 16px; font-weight: 600; cursor: pointer; border: none; background: none; width: 100%; text-align: left; transition: background .2s;}
+    .sidebar-item {position: relative; display: flex; align-items: center; gap: 16px; padding: 16px 20px; color: var(--text); font-size: 16px; font-weight: 600; cursor: pointer; border: none; background: none; width: 100%; text-align: left; transition: background .2s;}
     .sidebar-item:hover {background: var(--card2);}
     .sidebar-item.active {background: var(--card2); border-left: 4px solid var(--text); color: var(--text);}
     .sidebar-item svg {width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0;}
 
+    /* Бейдж непрочитанных */
+    .unread-badge {
+      position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+      background: var(--danger); color: #fff; font-size: 11px; font-weight: 800;
+      padding: 2px 6px; border-radius: 10px; display: none;
+    }
+
     /* ================= КОНТЕНТНАЯ ОБЛАСТЬ ================= */
     .content-area { flex: 1; display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; position: relative;}
-    
-    .topbar-mobile {display:none;}
-    
     .view-container { flex: 1; overflow-y: auto; padding: 14px; }
     .view { display: none; max-width: 800px; margin: 0 auto; }
     .view.active { display: block; }
@@ -66,23 +63,24 @@
     .chat-item.active { background: var(--card2); border-left: 4px solid var(--text); }
     
     .chat-main { flex: 1; display: flex; flex-direction: column; background: var(--bg); min-height: 0; height: 100%; }
-    
     .chat-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 18px; }
     .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
-    .msg { max-width: 70%; padding: 12px 16px; border-radius: 16px; font-size: 15px; line-height: 1.4; word-break: break-word; }
+    
+    .msg { max-width: 75%; padding: 12px 16px; border-radius: 16px; font-size: 15px; line-height: 1.4; word-break: break-word; }
     .msg.my { align-self: flex-end; background: var(--text); color: var(--bg); border-bottom-right-radius: 4px; }
     .msg.other { align-self: flex-start; background: var(--card2); color: var(--text); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
     
+    /* Медиа в чатах */
+    .msg-img { width: 100%; max-width: 300px; border-radius: 12px; margin-bottom: 8px; display: block; cursor: pointer; }
+    
     .chat-input-area { 
-      padding: 12px 20px; 
-      padding-bottom: calc(12px + env(safe-area-inset-bottom, 20px)); 
-      border-top: 1px solid var(--border); 
-      display: flex; 
-      gap: 10px; 
-      background: var(--bg); 
-      flex-shrink: 0;
+      padding: 12px 20px; padding-bottom: calc(12px + env(safe-area-inset-bottom, 20px)); 
+      border-top: 1px solid var(--border); display: flex; gap: 10px; background: var(--bg); flex-shrink: 0;
     }
     
+    .attach-btn { background: transparent; color: var(--muted); border: none; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0 5px; transition: color 0.2s; }
+    .attach-btn:hover { color: var(--text); }
+
     .chat-input { flex: 1; background: var(--card); border: 2px solid var(--border); border-radius: 24px; padding: 12px 18px; color: var(--text); outline: none; font-family: inherit; font-size: 16px; }
     .chat-input:focus { border-color: var(--text); }
     .chat-send { background: var(--text); color: var(--bg); border: none; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0;}
@@ -114,23 +112,26 @@
     .btn.ghost{background:transparent; color:var(--text); border: 2px solid var(--border);}
     .btn.danger{background:transparent; color:var(--danger); border: 2px solid var(--danger);}
     
-    .login-toggle{text-align:center;margin-top:22px;font-size:14px;color:var(--muted)}
-    .login-toggle a{color:var(--text);font-weight:700;text-decoration:none;cursor:pointer}
     .auth-tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px;}
     .auth-tab { flex: 1; background: none; border: none; color: var(--muted); font-size: 14px; font-weight: 700; cursor: pointer; padding: 10px; transition: color 0.2s;}
     .auth-tab.active { color: var(--text); border-bottom: 2px solid var(--text);}
-    .cache-warn { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.4; text-align: center;}
+    
+    .rules-checkbox { display: flex; align-items: flex-start; gap: 10px; margin-top: 15px; font-size: 12px; color: var(--muted); cursor: pointer; }
+    .rules-checkbox input { margin-top: 2px; accent-color: var(--text); cursor: pointer; }
+    .rules-checkbox a { color: var(--text); text-decoration: underline; cursor: pointer; }
 
     /* ================= МОБИЛЬНАЯ АДАПТАЦИЯ ================= */
     @media (max-width: 768px) {
-      .sidebar { position: fixed; left: 0; top: 0; width: 70px; } 
+      /* Уменьшенная панель до 60px */
+      .sidebar { position: fixed; left: 0; top: 0; width: 60px; } 
       .sidebar-header { display: none; }
       .sidebar-item { padding: 20px 0; justify-content: center; }
-      .sidebar-item span { display: none; } 
-      .sidebar-item svg { width: 28px; height: 28px; margin: 0; }
+      .sidebar-item span:not(.unread-badge) { display: none; } 
+      .sidebar-item svg { width: 26px; height: 26px; margin: 0; }
       .sidebar-item.active { border-left: 4px solid var(--text); }
+      .unread-badge { right: 4px; top: 14px; padding: 2px 4px; font-size: 10px; }
       
-      .content-area { margin-left: 70px; width: calc(100% - 70px); } 
+      .content-area { margin-left: 60px; width: calc(100% - 60px); } 
       .view-container { padding: 10px; }
       
       .chat-layout { flex-direction: column; }
@@ -151,6 +152,8 @@
     .verified{width:17px;height:17px;display:inline-block; fill: #1d9bf0;}
     
     .post-text{margin:12px 0 14px;font-size:15.5px;line-height:1.45; word-break: break-word;}
+    .post-img {width: 100%; max-height: 400px; object-fit: contain; border-radius: 12px; margin-bottom: 10px; background: var(--bg); display: block; cursor: pointer;}
+    
     .post-actions{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding-top:12px}
     
     .act{display:flex;align-items:center;gap:6px;background:none;border:0;cursor:pointer;color:var(--muted);font-size:13.5px;font-weight:600; transition: color 0.2s;}
@@ -198,6 +201,9 @@
     .modal-box textarea, .modal-box input[type="text"], .modal-box input[type="tel"]{width:100%;background:var(--bg);border:2px solid var(--border);border-radius:12px;color:var(--text);padding:12px;margin-bottom:12px;font-family:inherit; font-size: 15px; outline: none;}
     .modal-box textarea:focus, .modal-box input:focus { border-color: var(--text); }
     .modal-box textarea {min-height:80px; resize: vertical;}
+
+    .rules-text h3 {font-size: 16px; margin: 15px 0 5px 0; color: var(--text);}
+    .rules-text p {font-size: 14px; margin: 0 0 10px 0; color: var(--muted); line-height: 1.5;}
     
     #toasts{position:fixed;left:50%;transform:translateX(-50%);bottom:30px;z-index:300;display:flex;flex-direction:column;gap:8px;align-items:center}
     .toast{background:var(--card2);border:2px solid var(--text);padding:12px 18px;border-radius:14px;font-size:13.5px;font-weight:600; color: var(--text); box-shadow: 0 4px 12px rgba(0,0,0,.3);}
@@ -277,7 +283,12 @@
         </div>
       </div>
 
-      <button class="btn btn-primary" id="startBtn">Зарегистрироваться</button>
+      <label class="rules-checkbox">
+        <input type="checkbox" id="agreeRules">
+        <span>Я согласен с <a onclick="event.preventDefault(); openRulesModal();">правилами использования</a> Coregram</span>
+      </label>
+
+      <button class="btn btn-primary" id="startBtn" disabled>Зарегистрироваться</button>
     </div>
   </div>
 </div>
@@ -297,6 +308,7 @@
     <button class="sidebar-item" data-tab="chats" onclick="switchTab('chats')">
       <svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.8-.9L3 21l1.9-5a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 8.5-8.5 8.4 8.4 0 0 1 8.5 8.5z"></path></svg>
       <span>Чаты</span>
+      <div class="unread-badge" id="chatBadge" style="display:none;">0</div>
     </button>
 
     <button class="sidebar-item" data-tab="search" onclick="switchTab('search')">
@@ -336,7 +348,10 @@
             <div class="chat-empty" id="chatEmpty">Выберите чат, чтобы начать общение</div>
             <div class="chat-header" id="chatHeader" style="display:none;"></div>
             <div class="chat-messages" id="chatMessages" style="display:none;"></div>
+            
             <div class="chat-input-area" id="chatInputArea" style="display:none;">
+              <input type="file" id="chatPhotoInput" accept="image/*" style="display:none;">
+              <button class="attach-btn" onclick="$('#chatPhotoInput').click()" title="Прикрепить фото">📎</button>
               <input type="text" class="chat-input" id="chatInput" placeholder="Написать сообщение...">
               <button class="chat-send" onclick="sendMessage()">
                 <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
@@ -402,13 +417,23 @@
             </div>
           </div>
 
-          <!-- НОВЫЙ РАЗДЕЛ БЕЗОПАСНОСТИ -->
           <div class="settings-group">
             <div class="settings-title">Безопасность и приватность</div>
             <div class="srow-btn" onclick="openPrivacySettings()">
               <span>
                 <svg viewBox="0 0 24 24" style="width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                 Приватность и безопасность
+              </span>
+              <span>›</span>
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <div class="settings-title">Документы</div>
+            <div class="srow-btn" onclick="openRulesModal()">
+              <span>
+                <svg viewBox="0 0 24 24" style="width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Правила использования
               </span>
               <span>›</span>
             </div>
@@ -459,7 +484,7 @@
   const postsRef = ref(db, 'posts');
   const usersRef = ref(db, 'users');
   const chatsRef = ref(db, 'chats');
-  const reportsRef = ref(db, 'reports'); // Новая ветка для жалоб
+  const reportsRef = ref(db, 'reports');
 
   const SYSTEM_ACCOUNTS = {
     bogdan: { id: 'bogdan-core', name: 'Bogdan', handle: 'bogdan', aliases: ['svqne'], password: '9080Vop1234', bio: 'CEO coregram', verified: true },
@@ -482,6 +507,10 @@
   let notifSettings = JSON.parse(localStorage.getItem('cg_notif_settings') || '{"sound":true,"subs":true,"likes":true}');
   
   let activeChatId = null;
+  let unreadCounts = JSON.parse(localStorage.getItem('cg_unread_' + (profile ? profile.id : 'unknown')) || '{}');
+  
+  let tempPostImage = null;
+  let tempChatImage = null;
 
   const $ = s => document.querySelector(s);
   const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -521,6 +550,51 @@
 
   function getChatId(uid1, uid2) {
     return [uid1, uid2].sort().join('_');
+  }
+
+  function updateUnreadBadge() {
+    let total = 0;
+    for (const key in unreadCounts) {
+      total += unreadCounts[key];
+    }
+    const badge = $('#chatBadge');
+    if (total > 0) {
+      badge.style.display = 'block';
+      badge.textContent = total > 99 ? '99+' : total;
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
+  function saveUnread() {
+    if (profile) {
+      localStorage.setItem('cg_unread_' + profile.id, JSON.stringify(unreadCounts));
+    }
+    updateUnreadBadge();
+  }
+
+  function compressImage(file, maxWidth, maxHeight, quality, callback) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+        if (width > height) {
+          if (width > maxWidth) { height = Math.round(height * maxWidth / width); width = maxWidth; }
+        } else {
+          if (height > maxHeight) { width = Math.round(width * maxHeight / height); height = maxHeight; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        callback(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
   }
 
   window.toggleTheme = (theme) => {
@@ -580,41 +654,49 @@
     const box = $('#modalBox');
     box.innerHTML = `
       <h2>Приватность</h2>
-      
       <div class="setting-row">
         <span>Кто может мне писать?</span>
-        <select>
-          <option>Все</option>
-          <option>Контакты</option>
-          <option>Никто</option>
-        </select>
+        <select><option>Все</option><option>Контакты</option><option>Никто</option></select>
       </div>
-      
       <div class="setting-row">
         <span>Кто может видеть аватар?</span>
-        <select>
-          <option>Все</option>
-          <option>Контакты</option>
-          <option>Никто</option>
-        </select>
+        <select><option>Все</option><option>Контакты</option><option>Никто</option></select>
       </div>
-
       <div class="setting-row">
         <span>Кто может видеть профиль?</span>
-        <select>
-          <option>Все</option>
-          <option>Контакты</option>
-          <option>Никто</option>
-        </select>
+        <select><option>Все</option><option>Контакты</option><option>Никто</option></select>
       </div>
-
       <button class="btn btn-primary" onclick="toast('Настройки приватности сохранены ✅'); closeModal();">Сохранить</button>
       <button class="btn ghost" onclick="closeModal()">Закрыть</button>
     `;
     $('#modal').classList.add('show');
   };
 
-  // === СИСТЕМА ЖАЛОБ ===
+  window.openRulesModal = () => {
+    const box = $('#modalBox');
+    box.innerHTML = `
+      <h2>Правила использования</h2>
+      <div class="rules-text">
+        <h3>1. Уважение к пользователям</h3>
+        <p>Запрещены любые формы травли, угроз, оскорблений. Преследование ведет к блокировке.</p>
+        <h3>2. Запрещенный контент (18+)</h3>
+        <p>Размещение порнографических материалов, сцен насилия строго запрещено.</p>
+        <h3>3. Экстремизм</h3>
+        <p>Запрещено призывать к насилию, разжигать рознь, пропагандировать терроризм.</p>
+        <h3>4. Неприемлемая символика</h3>
+        <p>Использование нацистской или экстремистской символики не допускается.</p>
+        <h3>5. Спам и мошенничество</h3>
+        <p>Запрещено массово рассылать рекламу, использовать фишинговые ссылки.</p>
+        <h3>6. Безопасность данных</h3>
+        <p>Не публикуйте чужие личные данные без согласия.</p>
+        <h3>7. Работа модерации</h3>
+        <p>Мы можем удалять контент и блокировать аккаунты. Жалуйтесь через флажок (⚑) под постом.</p>
+      </div>
+      <button class="btn btn-primary" onclick="closeModal()">Я согласен</button>
+    `;
+    $('#modal').classList.add('show');
+  };
+
   window.openReportModal = (postId) => {
     const box = $('#modalBox');
     box.innerHTML = `
@@ -676,9 +758,14 @@
     $('#registerPane').style.display = 'block'; $('#loginPane').style.display = 'none';
   };
 
+  $('#agreeRules').onchange = (e) => {
+    $('#startBtn').disabled = !e.target.checked;
+  };
+
   const savedProfile = localStorage.getItem('cg_profile');
   if (savedProfile) {
     profile = JSON.parse(savedProfile);
+    unreadCounts = JSON.parse(localStorage.getItem('cg_unread_' + profile.id) || '{}');
     initApp();
   } else {
     $('#authScreen').classList.add('active');
@@ -687,6 +774,11 @@
 
   function startAuth() {
     $('#startBtn').onclick = async () => {
+      if (!$('#agreeRules').checked) {
+        toast('Необходимо согласиться с правилами');
+        return;
+      }
+
       const username = $('#regUsername').value.trim();
       const phone = $('#regPhone').value.trim();
       const pass = $('#regPass').value;
@@ -717,6 +809,7 @@
         const newId = 'u_' + Date.now();
         profile = { id: newId, name: username, handle: username, bio: '', avatar: null, phone: phone, verified: false };
         localStorage.setItem('cg_profile', JSON.stringify(profile));
+        unreadCounts = {};
         
         await set(ref(db, 'users/' + profile.id), { 
           name: username, handle: username, bio: '', phone: phone, password: pass, ts: Date.now(), banned: false, avatar: null 
@@ -741,6 +834,7 @@
         if (pass !== sys.password) { toast('Неверный пароль'); return; }
         profile = { id: sys.id, name: sys.name, handle: sys.handle, bio: sys.bio, verified: true, avatar: null };
         localStorage.setItem('cg_profile', JSON.stringify(profile));
+        unreadCounts = JSON.parse(localStorage.getItem('cg_unread_' + profile.id) || '{}');
         initApp();
         return;
       }
@@ -777,6 +871,7 @@
 
           profile = { id: foundUser.id, name: foundUser.name, handle: foundUser.handle, bio: foundUser.bio, avatar: foundUser.avatar, phone: foundUser.phone, verified: false };
           localStorage.setItem('cg_profile', JSON.stringify(profile));
+          unreadCounts = JSON.parse(localStorage.getItem('cg_unread_' + profile.id) || '{}');
           initApp();
           return;
         } else {
@@ -795,20 +890,15 @@
   function initApp() {
     $('#authScreen').classList.remove('active');
     $('#appScreen').style.display = 'flex';
+    updateUnreadBadge();
 
     setTimeout(() => {
       Object.values(SYSTEM_ACCOUNTS).forEach(sys => {
         get(ref(db, 'users/' + sys.id)).then((snap) => {
           if (!snap.exists()) {
             set(ref(db, 'users/' + sys.id), {
-              name: sys.name,
-              handle: sys.handle,
-              bio: sys.bio,
-              verified: true,
-              phone: 'secret',
-              avatar: null,
-              banned: false,
-              ts: Date.now()
+              name: sys.name, handle: sys.handle, bio: sys.bio,
+              verified: true, phone: 'secret', avatar: null, banned: false, ts: Date.now()
             });
           }
         });
@@ -893,20 +983,40 @@
       const myUserData = usersMap.get(profile.id);
       if (myUserData && myUserData.banned) { alert('❌ Вы забанены.'); return; }
       
+      tempPostImage = null;
       const box = $('#modalBox');
       box.innerHTML = `
         <h2>Новый пост</h2>
         <textarea id="newPostText" placeholder="Что происходит?"></textarea>
+        <div style="display:flex; gap:10px; margin-bottom:10px;">
+          <input type="file" id="postImageInput" accept="image/*" style="display:none;">
+          <button class="btn ghost" onclick="$('#postImageInput').click()" style="margin:0; padding:8px; font-size:13px;">📷 Добавить фото</button>
+        </div>
+        <div id="postImagePreview" style="display:none; margin-bottom:10px; text-align:center;">
+          <img id="postPreviewImg" style="max-width:100%; max-height:200px; border-radius:12px;">
+        </div>
         <button class="btn btn-primary" id="postPublish">Опубликовать</button>
         <button class="btn ghost" onclick="closeModal()">Отмена</button>
       `;
       $('#modal').classList.add('show');
+
+      $('#postImageInput').onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        compressImage(file, 800, 800, 0.7, (base64) => {
+          tempPostImage = base64;
+          $('#postImagePreview').style.display = 'block';
+          $('#postPreviewImg').src = base64;
+        });
+      };
+
       $('#postPublish').onclick = () => {
         const txt = $('#newPostText').value.trim();
-        if (!txt) { toast('Напишите текст'); return; }
+        if (!txt && !tempPostImage) { toast('Напишите текст или добавьте фото'); return; }
+        
         push(postsRef, {
           authorId: profile.id, authorName: profile.name, authorHandle: profile.handle,
-          verified: !!profile.verified, text: txt, likes: 0, comments: 0, ts: Date.now()
+          verified: !!profile.verified, text: txt, image: tempPostImage, likes: 0, comments: 0, ts: Date.now()
         });
         closeModal();
         toast('Опубликовано ✅');
@@ -916,6 +1026,15 @@
     $('#chatInput').addEventListener('keypress', function (e) {
       if (e.key === 'Enter') sendMessage();
     });
+
+    $('#chatPhotoInput').onchange = (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      compressImage(file, 800, 800, 0.7, (base64) => {
+        tempChatImage = base64;
+        sendMessage();
+      });
+    };
 
     $('#searchUserInput').oninput = (e) => {
       const query = e.target.value.toLowerCase().trim().replace('@', '');
@@ -1042,6 +1161,20 @@
         for (const chatId in data) {
           if (chatId.includes(profile.id)) {
             chatsMap.set(chatId, data[chatId]);
+            
+            // Логика непрочитанных
+            if (!isInitialLoad && chatId !== activeChatId) {
+              const msgs = data[chatId].messages;
+              if (msgs) {
+                const msgsArr = Object.values(msgs);
+                const lastMsg = msgsArr[msgsArr.length - 1];
+                if (lastMsg && lastMsg.sender !== profile.id) {
+                  // Если последнее сообщение не мое и чат не открыт
+                  unreadCounts[chatId] = (unreadCounts[chatId] || 0) + 1;
+                  saveUnread();
+                }
+              }
+            }
           }
         }
       }
@@ -1052,7 +1185,6 @@
       }
     });
 
-    // СЛУШАЕМ ЖАЛОБЫ
     onValue(reportsRef, (snapshot) => {
       reportsMap.clear();
       const data = snapshot.val();
@@ -1062,7 +1194,6 @@
         }
       }
       if ($('#modal').classList.contains('show') && $('#modalBox').querySelector('h2').textContent.includes('ADMIN')) {
-        // Если открыта админка, обновляем её при новых жалобах
         openAdminPanel(); 
       }
     });
@@ -1075,6 +1206,12 @@
     const chatId = getChatId(profile.id, otherId);
     activeChatId = chatId;
     
+    // Сбрасываем непрочитанные
+    if (unreadCounts[chatId]) {
+      unreadCounts[chatId] = 0;
+      saveUnread();
+    }
+
     const chatRef = ref(db, 'chats/' + chatId);
     get(chatRef).then((snap) => {
       if (!snap.exists()) {
@@ -1098,20 +1235,24 @@
 
   window.sendMessage = () => {
     const text = $('#chatInput').value.trim();
-    if (!text || !activeChatId) return;
+    if (!text && !tempChatImage) return;
+    if (!activeChatId) return;
     
     $('#chatInput').value = '';
     
     push(ref(db, 'chats/' + activeChatId + '/messages'), {
       sender: profile.id,
       text: text,
+      image: tempChatImage,
       ts: Date.now()
     });
     
     update(ref(db, 'chats/' + activeChatId), {
-      lastMsg: text,
+      lastMsg: tempChatImage ? '📷 Фото' : text,
       ts: Date.now()
     });
+
+    tempChatImage = null;
   };
 
   function renderChatList() {
@@ -1138,6 +1279,7 @@
 
       const av = otherUser.avatar || avatarCache[otherUser.id] || null;
       const isActive = chatId === activeChatId;
+      const unread = unreadCounts[chatId] || 0;
       
       return `
         <div class="chat-item ${isActive ? 'active' : ''}" onclick="openChatWith('${otherUser.id}', '${esc(otherUser.name)}')">
@@ -1146,6 +1288,7 @@
             <div style="font-weight:700; font-size:15px;">${esc(otherUser.name)}</div>
             <div style="font-size:13px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${esc(chatData.lastMsg || 'Нет сообщений')}</div>
           </div>
+          ${unread > 0 ? `<div style="background:var(--danger); color:#fff; font-size:11px; font-weight:800; padding:2px 6px; border-radius:10px;">${unread}</div>` : ''}
         </div>
       `;
     }).join('');
@@ -1191,7 +1334,14 @@
     
     msgsContainer.innerHTML = msgArr.map(m => {
       const isMe = m.sender === profile.id;
-      return `<div class="msg ${isMe ? 'my' : 'other'}">${esc(m.text)}</div>`;
+      let content = '';
+      if (m.image) {
+        content += `<img src="${m.image}" class="msg-img" onclick="viewFullImage('${m.image}')">`;
+      }
+      if (m.text) {
+        content += `<div>${esc(m.text)}</div>`;
+      }
+      return `<div class="msg ${isMe ? 'my' : 'other'}">${content}</div>`;
     }).join('');
     
     msgsContainer.scrollTop = msgsContainer.scrollHeight;
@@ -1268,6 +1418,11 @@
         avatarHTML = `<div class="avatar">${esc(p.authorName.charAt(0).toUpperCase())}</div>`;
       }
 
+      let imageHTML = '';
+      if (p.image) {
+        imageHTML = `<img src="${p.image}" class="post-img" onclick="viewFullImage('${p.image}')">`;
+      }
+
       return `
         <div class="post" data-pid="${p.id}">
           <div class="post-head" onclick="openUserProfile('${esc(p.authorHandle)}')">
@@ -1278,6 +1433,7 @@
             </div>
           </div>
           <div class="post-text">${esc(p.text)}</div>
+          ${imageHTML}
           <div class="post-actions">
             <button class="act like-btn ${liked ? 'liked' : ''}" data-pid="${p.id}">
               <svg class="heart-svg" viewBox="0 0 24 24">
@@ -1311,6 +1467,15 @@
       };
     });
   }
+
+  window.viewFullImage = (src) => {
+    const box = $('#modalBox');
+    box.innerHTML = `
+      <img src="${src}" style="width:100%; border-radius:12px; margin-bottom:10px;">
+      <button class="btn ghost" onclick="closeModal()">Закрыть</button>
+    `;
+    $('#modal').classList.add('show');
+  };
 
   window.openUserProfile = (handle) => {
     if (!handle) return;
@@ -1402,7 +1567,6 @@
     let totalUsers = 3; 
     usersMap.forEach(u => { if(u.phone) totalUsers++; });
 
-    // Сортируем жалобы (новые сверху)
     const sortedReports = Array.from(reportsMap.values()).sort((a,b) => b.ts - a.ts);
 
     box.innerHTML = `
@@ -1451,7 +1615,6 @@
   };
 
   window.banFromReport = (reportId, targetHandle) => {
-    // Ищем юзера по нику
     const targetUser = Array.from(usersMap.values()).find(u => u.handle && u.handle.toLowerCase() === targetHandle.replace('@','').toLowerCase());
     
     if (!targetUser) {
@@ -1460,7 +1623,7 @@
     }
 
     update(ref(db, 'users/' + targetUser.id), { banned: true }).then(() => {
-      remove(ref(db, 'reports/' + reportId)); // Удаляем жалобу после бана
+      remove(ref(db, 'reports/' + reportId));
       toast(`Пользователь ${targetHandle} забанен!`);
     });
   };
