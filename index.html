@@ -194,6 +194,18 @@
     .srow-btn:hover {border-color: var(--text);}
     .srow-btn span {font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 12px;}
 
+    /* СПЕЦИАЛЬНЫЙ КЛАСС ДЛЯ ИКОНКИ, ЧТОБЫ ОНА НЕ ПОКАЗЫВАЛА ЧЕРНЫЕ УГЛЫ В СВЕТЛОЙ ТЕМЕ */
+    .bell-icon {
+      width: 36px; 
+      height: 36px; 
+      object-fit: contain; 
+      border-radius: 50%; /* Скругляем края */
+      transition: filter 0.3s; /* Плавный переход цвета */
+    }
+    [data-theme="light"] .bell-icon {
+      filter: invert(1); /* В светлой теме делаем картинку инвертированной (черной), чтобы убрать светлые/темные артефакты */
+    }
+
     .setting-row {display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 10px; flex-wrap: wrap;}
     .setting-row span {font-size: 15px; font-weight: 600;}
     
@@ -424,7 +436,8 @@
             <div class="settings-title">Уведомления</div>
             <div class="srow-btn" onclick="openNotificationSettings()">
               <span>
-                <img src="https://s6.iimage.su/s/11/th_gTrXz68xtyPnNhY55hXICVNVt0grHl393vw9HJWWB.png" style="width: 36px; height: 36px; object-fit: contain;">
+                <!-- ИСПОЛЬЗУЕМ НОВЫЙ КЛАСС bell-icon ДЛЯ ИСПРАВЛЕНИЯ УГЛОВ -->
+                <img src="https://s6.iimage.su/s/11/th_gTrXz68xtyPnNhY55hXICVNVt0grHl393vw9HJWWB.png" class="bell-icon">
                 Настройки уведомлений
               </span>
               <span>›</span>
