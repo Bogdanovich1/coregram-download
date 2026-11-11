@@ -1618,11 +1618,11 @@
       <div style="margin-top:20px; margin-bottom:10px; font-weight:700;">👥 Зарегистрированные юзеры</div>
       <div style="max-height:200px; overflow-y:auto; padding-right:5px; margin-bottom:20px;">
         ${Array.from(usersMap.values()).map(u => `
-          <div class="admin-card">
+          <div class="admin-card" style="flex-direction:row; justify-content:space-between; align-items:center;">
             <div onclick="openUserProfile('${esc(u.handle)}')" style="cursor:pointer; text-decoration:underline;">
               <span style="font-size:14px; font-weight:600;">@${esc(u.handle)}</span>
             </div>
-            <div style="font-size:12px; color:var(--muted);">${esc(u.name)}</div>
+            <button class="admin-btn ban" onclick="window.toggleBan('${u.id}', ${!!u.banned})" style="margin:0;">${u.banned ? 'Разбан' : 'Забанить'}</button>
           </div>
         `).join('')}
       </div>
@@ -1667,6 +1667,12 @@
   };
 
   window.toggleBan = (userId, isBanned) => {
+    // БОГДАНА НЕЛЬЗЯ ЗАБАНИТЬ
+    if (userId === 'bogdan-core') {
+      toast('❌ Вы не можете забанить создателя Coregram');
+      return;
+    }
+
     update(ref(db, 'users/' + userId), { banned: !isBanned }).then(() => {
         toast(isBanned ? 'Пользователь разбанен' : 'Пользователь забанен!');
         setTimeout(openAdminPanel, 100); 
