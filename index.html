@@ -38,7 +38,6 @@
     .sidebar-item.active {background: var(--card2); border-left: 4px solid var(--text); color: var(--text);}
     .sidebar-item svg {width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0;}
 
-    /* Бейдж непрочитанных */
     .unread-badge {
       position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
       background: var(--danger); color: #fff; font-size: 11px; font-weight: 800;
@@ -70,21 +69,28 @@
     .msg.my { align-self: flex-end; background: var(--text); color: var(--bg); border-bottom-right-radius: 4px; }
     .msg.other { align-self: flex-start; background: var(--card2); color: var(--text); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
     
-    /* Медиа в чатах */
     .msg-img { width: 100%; max-width: 300px; border-radius: 12px; margin-bottom: 8px; display: block; cursor: pointer; }
     
     .chat-input-area { 
       padding: 12px 20px; padding-bottom: calc(12px + env(safe-area-inset-bottom, 20px)); 
-      border-top: 1px solid var(--border); display: flex; gap: 10px; background: var(--bg); flex-shrink: 0;
+      border-top: 1px solid var(--border); display: flex; gap: 8px; align-items: center; background: var(--bg); flex-shrink: 0;
     }
     
-    .attach-btn { background: transparent; color: var(--muted); border: none; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0 5px; transition: color 0.2s; }
-    .attach-btn:hover { color: var(--text); }
+    .attach-btn, .chat-send { 
+      background: transparent; color: var(--muted); border: none; cursor: pointer; 
+      display: flex; align-items: center; justify-content: center; 
+      width: 44px; height: 44px; border-radius: 50%; transition: color 0.2s, background 0.2s;
+    }
+    .attach-btn:hover { color: var(--text); background: var(--card2); }
+    
+    .chat-send { background: var(--text); color: var(--bg); }
+    .chat-send:hover { opacity: 0.9; }
+
+    .attach-btn svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round;}
+    .chat-send svg { width: 20px; height: 20px; fill: currentColor; stroke: none; }
 
     .chat-input { flex: 1; background: var(--card); border: 2px solid var(--border); border-radius: 24px; padding: 12px 18px; color: var(--text); outline: none; font-family: inherit; font-size: 16px; }
     .chat-input:focus { border-color: var(--text); }
-    .chat-send { background: var(--text); color: var(--bg); border: none; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0;}
-    .chat-send svg { width: 20px; height: 20px; fill: currentColor; }
     .chat-empty { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 15px; }
     
     /* ================= АВТОРИЗАЦИЯ ================= */
@@ -122,7 +128,6 @@
 
     /* ================= МОБИЛЬНАЯ АДАПТАЦИЯ ================= */
     @media (max-width: 768px) {
-      /* Уменьшенная панель до 60px */
       .sidebar { position: fixed; left: 0; top: 0; width: 60px; } 
       .sidebar-header { display: none; }
       .sidebar-item { padding: 20px 0; justify-content: center; }
@@ -191,7 +196,14 @@
 
     .setting-row {display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 10px; flex-wrap: wrap;}
     .setting-row span {font-size: 15px; font-weight: 600;}
-    .setting-row select {background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 8px; font-family: inherit; font-size: 14px; outline: none; cursor: pointer;}
+    
+    /* ПОЛЗУНКИ (Switch) */
+    .switch {position: relative; display: inline-block; width: 50px; height: 28px;}
+    .switch input {opacity: 0; width: 0; height: 0;}
+    .slider {position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border); transition: .4s; border-radius: 34px;}
+    .slider:before {position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: var(--muted); transition: .4s; border-radius: 50%;}
+    input:checked + .slider {background-color: var(--text);}
+    input:checked + .slider:before {transform: translateX(22px); background-color: var(--bg);}
 
     /* ================= МОДАЛКИ ================= */
     .modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);padding:20px}
@@ -351,7 +363,9 @@
             
             <div class="chat-input-area" id="chatInputArea" style="display:none;">
               <input type="file" id="chatPhotoInput" accept="image/*" style="display:none;">
-              <button class="attach-btn" onclick="$('#chatPhotoInput').click()" title="Прикрепить фото">📎</button>
+              <button class="attach-btn" onclick="document.getElementById('chatPhotoInput').click()" title="Прикрепить фото">
+                <svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+              </button>
               <input type="text" class="chat-input" id="chatInput" placeholder="Написать сообщение...">
               <button class="chat-send" onclick="sendMessage()">
                 <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
@@ -410,7 +424,7 @@
             <div class="settings-title">Уведомления</div>
             <div class="srow-btn" onclick="openNotificationSettings()">
               <span>
-                <img src="https://s6.iimage.su/s/10/gP6advTx7mVQzUfQTG4OLj1VoBezkK4KYLm9hFm7u.png" style="width: 28px; height: 28px; object-fit: contain;">
+                <img src="https://s6.iimage.su/s/10/gP6advTx7mVQzUfQTG4OLj1VoBezkK4KYLm9hFm7u.png" style="width: 36px; height: 36px; object-fit: contain;">
                 Настройки уведомлений
               </span>
               <span>›</span>
@@ -656,15 +670,24 @@
       <h2>Приватность</h2>
       <div class="setting-row">
         <span>Кто может мне писать?</span>
-        <select><option>Все</option><option>Контакты</option><option>Никто</option></select>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="slider"></span>
+        </label>
       </div>
       <div class="setting-row">
         <span>Кто может видеть аватар?</span>
-        <select><option>Все</option><option>Контакты</option><option>Никто</option></select>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="slider"></span>
+        </label>
       </div>
       <div class="setting-row">
         <span>Кто может видеть профиль?</span>
-        <select><option>Все</option><option>Контакты</option><option>Никто</option></select>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="slider"></span>
+        </label>
       </div>
       <button class="btn btn-primary" onclick="toast('Настройки приватности сохранены ✅'); closeModal();">Сохранить</button>
       <button class="btn ghost" onclick="closeModal()">Закрыть</button>
@@ -832,6 +855,10 @@
       const sys = findSystemAccount(loginInput);
       if (sys) {
         if (pass !== sys.password) { toast('Неверный пароль'); return; }
+        // БОГДАНА НЕЛЬЗЯ ЗАБАНИТЬ
+        if (sys.id === 'bogdan-core') {
+          update(ref(db, 'users/' + sys.id), { banned: false });
+        }
         profile = { id: sys.id, name: sys.name, handle: sys.handle, bio: sys.bio, verified: true, avatar: null };
         localStorage.setItem('cg_profile', JSON.stringify(profile));
         unreadCounts = JSON.parse(localStorage.getItem('cg_unread_' + profile.id) || '{}');
@@ -990,7 +1017,7 @@
         <textarea id="newPostText" placeholder="Что происходит?"></textarea>
         <div style="display:flex; gap:10px; margin-bottom:10px;">
           <input type="file" id="postImageInput" accept="image/*" style="display:none;">
-          <button class="btn ghost" onclick="$('#postImageInput').click()" style="margin:0; padding:8px; font-size:13px;">📷 Добавить фото</button>
+          <button class="btn ghost" onclick="document.getElementById('postImageInput').click()" style="margin:0; padding:8px; font-size:13px;">📷 Добавить фото</button>
         </div>
         <div id="postImagePreview" style="display:none; margin-bottom:10px; text-align:center;">
           <img id="postPreviewImg" style="max-width:100%; max-height:200px; border-radius:12px;">
@@ -1162,14 +1189,12 @@
           if (chatId.includes(profile.id)) {
             chatsMap.set(chatId, data[chatId]);
             
-            // Логика непрочитанных
             if (!isInitialLoad && chatId !== activeChatId) {
               const msgs = data[chatId].messages;
               if (msgs) {
                 const msgsArr = Object.values(msgs);
                 const lastMsg = msgsArr[msgsArr.length - 1];
                 if (lastMsg && lastMsg.sender !== profile.id) {
-                  // Если последнее сообщение не мое и чат не открыт
                   unreadCounts[chatId] = (unreadCounts[chatId] || 0) + 1;
                   saveUnread();
                 }
@@ -1206,7 +1231,6 @@
     const chatId = getChatId(profile.id, otherId);
     activeChatId = chatId;
     
-    // Сбрасываем непрочитанные
     if (unreadCounts[chatId]) {
       unreadCounts[chatId] = 0;
       saveUnread();
@@ -1591,18 +1615,18 @@
         `).join('')}
       </div>
 
-      <div style="margin-top:20px; margin-bottom:10px; font-weight:700;">📝 Управление постами</div>
-      <div style="max-height:150px; overflow-y:auto; padding-right:5px;">
-        ${Array.from(postsMap.values()).map(p => `
+      <div style="margin-top:20px; margin-bottom:10px; font-weight:700;">👥 Зарегистрированные юзеры</div>
+      <div style="max-height:200px; overflow-y:auto; padding-right:5px; margin-bottom:20px;">
+        ${Array.from(usersMap.values()).map(u => `
           <div class="admin-card">
-            <div>
-              <span style="font-size:14px; font-weight:600;">@${esc(p.authorHandle)}</span>
-              <span style="font-size:12px; color:var(--muted);">${esc(p.text.substring(0, 40))}...</span>
+            <div onclick="openUserProfile('${esc(u.handle)}')" style="cursor:pointer; text-decoration:underline;">
+              <span style="font-size:14px; font-weight:600;">@${esc(u.handle)}</span>
             </div>
-            <button class="admin-btn" onclick="window.deletePost('${p.id}')">Удалить</button>
+            <div style="font-size:12px; color:var(--muted);">${esc(u.name)}</div>
           </div>
         `).join('')}
       </div>
+
       <button class="btn ghost" onclick="closeModal()" style="margin-top:20px">Закрыть</button>
     `;
     $('#modal').classList.add('show');
@@ -1615,6 +1639,12 @@
   };
 
   window.banFromReport = (reportId, targetHandle) => {
+    // БОГДАНА НЕЛЬЗЯ ЗАБАНИТЬ
+    if (targetHandle.replace('@','').toLowerCase() === 'bogdan') {
+      toast('❌ Вы не можете забанить создателя Coregram');
+      return;
+    }
+
     const targetUser = Array.from(usersMap.values()).find(u => u.handle && u.handle.toLowerCase() === targetHandle.replace('@','').toLowerCase());
     
     if (!targetUser) {
